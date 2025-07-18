@@ -1,6 +1,7 @@
 import React from 'react'
 import './Menubar.css' 
 import {assets} from '../../assets/assets.js'
+import { Link } from 'react-router-dom'
 
 const Menubar = () => {
   return (
@@ -14,17 +15,17 @@ const Menubar = () => {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <a className="nav-link  mx-2"  href="#">Home</a>
+          <Link className="nav-link  mx-2" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link  mx-2"  href="#">Explore</a>
+          <Link className="nav-link  mx-2" to="/explorefood">Explore</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Contact us </a>
+          <Link className="nav-link" to="/contactus">Contact us</Link>
         </li>
        
       </ul>
-        <div className="menubar-right">
+        <div className="d-flex align-items-center menubar-right">
             <div className="position-relative mx-2">
                 <img src={assets.carticon} alt="" height={30} width={30} className="position-absolute" />
                 <span className="position-relative top-0 start-100 translate-middle badge rounded-pill bg-danger">5</span>
