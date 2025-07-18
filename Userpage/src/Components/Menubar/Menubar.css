@@ -1,0 +1,9 @@
+.logo{
+    margin-right: 3px;
+}
+
+.menubar-right {
+    display : flex ;
+    align-items : center ; 
+    gap : 20px;
+}
