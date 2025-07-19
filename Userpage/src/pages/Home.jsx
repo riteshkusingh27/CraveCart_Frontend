@@ -9,6 +9,7 @@ const Home = () => {
         <Header />
         <Exploremenu />
         <FoodDisplay />
+      
     </main>
   )
 }

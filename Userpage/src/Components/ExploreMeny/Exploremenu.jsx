@@ -26,7 +26,7 @@ const Exploremenu = () => {
           <i className="bi bi-arrow-right-circle scroll-icon" onClick={scrollRight}></i>
         </div>
       </h1>
-      <p className="mx-5">Explore curated list of dishes from top categories</p>
+      <p className="">Explore curated list of dishes from top categories</p>
       <div className="d-flex justify-content-between  overflow-auto explore-menu-list-item  " ref={menuRef}>
         {categories.map((item, index) => {
           return (
