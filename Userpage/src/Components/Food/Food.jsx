@@ -2,14 +2,17 @@ import React from 'react'
 import { useAppcontext } from '../../context/AppContext.jsx'
 import { Link } from 'react-router-dom'
 
-const Food = () => {
+const Food = ({category}) => {
   const { foodList } = useAppcontext();
+    // Filter food items based on the selected category
+
+    const filteredFoodList = foodList.filter(food => category === 'All' || food.category === category);
 
   return (
     <div className="container">
       <div className="row">
-        {foodList.length > 0 ? (
-          foodList.map((food, index) => (
+        {filteredFoodList.length > 0 ? (
+          filteredFoodList.map((food, index) => (
             <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
               {/* Add h-100 to make cards in a row equal height */}
               <div className="card h-100 d-flex flex-column" style={{ maxWidth: "320px" }}>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API_URL = "http://localhost:8080/api/foods";
 export const addFood = async (foodData, image) => {
@@ -43,6 +44,6 @@ export const deleteFood = async(id)=>{
      
    } catch (error) {
    return   toast.error("Failed to remove food item");
-     throw error;
+   
    }
 }

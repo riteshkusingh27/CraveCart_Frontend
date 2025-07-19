@@ -47,21 +47,25 @@ const AddFood = () => {
         //create a form data 
         try {
             await addFood(data, image);
+            toast.success("Food added successfully");
             
           
-            setAddingFood(false);
-            toast.success("Food added successfully");
+         
             setData({
                 name: "",
                 description: "",
                 category: "",
                 price: "",
+                image : false
             });
+            setImage(false);
         } catch (error) {
             console.log("error")
            toast.error("Something went wrong");
         }
         finally{
+               setAddingFood(false);
+               
             
         }
        

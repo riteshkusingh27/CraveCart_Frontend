@@ -1,19 +1,32 @@
 .explore-menu-list::-webkit-scrollbar{
-    display: none ; 
-}
-.explore-menu-list {
-    scrollbar-width: none;
+    display: none;
 }
 
-.explore-menu-list-item img{
+.explore-menu-list {
+    scrollbar-width: none;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden; /* Prevent vertical scroll */
+    gap: 20px;
+    padding: 10px 0;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.explore-menu-list > div {
+    flex-shrink: 0;
+    min-width: 128px;
+    white-space: normal; /* Allow text wrapping in items */
+}
+
+.explore-menu-list img{
     cursor:pointer;
 }
 
-.explore-menu-list-item .active{
+.explore-menu-list .active{
     border: 5px solid tomato;
     padding:2px;
 }
-.explore-menu-list-item p{
+.explore-menu-list p{
     color : #747474;
     cursor: pointer ; 
     
@@ -35,4 +48,8 @@
     background-color : #e2e2e2;
     border : none;
 
+    
+}
+.explore-menu-item  .acive {
+    border : 2px red ; 
 }

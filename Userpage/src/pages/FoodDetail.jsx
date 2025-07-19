@@ -28,16 +28,16 @@ const FoodDetail = () => {
     
     useEffect(()=>{
         if(id) {
-            fetchData(id); // ✅ Pass the id parameter
+            fetchData(id); 
         }
-    }, [id]) // ✅ Add dependency array
+    }, [id]) 
 
-    // ✅ Add loading state
+ 
     if(loading) {
         return <div className="container py-5"><h3>Loading...</h3></div>
     }
 
-    // ✅ Add null check
+
     if(!data) {
         return <div className="container py-5"><h3>Food not found</h3></div>
     }
@@ -53,12 +53,12 @@ const FoodDetail = () => {
                              alt="..." />
                     </div>
                     <div className="col-md-6">
-                         <div className="small mb-1">
+                         <div className="small fs-5 mb-1">
                             Category : <span className="badge text-bg-warning">{data?.category}</span>
                          </div>
                         <h1 className="display-5 fw-bolder">{data?.name}</h1> 
-                        <div className="fs-5 mb-5">
-                            <span>&#8377;{data?.price}</span>
+                        <div className="fs-5 mb-2">
+                            <span>&#8377;{data?.price}.00</span>
                         </div>
                         <p className="lead">{data?.description}</p>
                         <div className="d-flex">
