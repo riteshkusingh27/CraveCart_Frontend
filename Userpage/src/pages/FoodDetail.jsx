@@ -2,11 +2,15 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import {useAppcontext} from '../context/AppContext.jsx'
+import {toast, ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const FoodDetail = () => {
     const {id} = useParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const {increaseQty} = useAppcontext();
     
     const fetchData = async (id) =>{
       try {
@@ -32,11 +36,9 @@ const FoodDetail = () => {
         }
     }, [id]) 
 
- 
     if(loading) {
         return <div className="container py-5"><h3>Loading...</h3></div>
     }
-
 
     if(!data) {
         return <div className="container py-5"><h3>Food not found</h3></div>
@@ -62,7 +64,10 @@ const FoodDetail = () => {
                         </div>
                         <p className="lead">{data?.description}</p>
                         <div className="d-flex">
-                            <button className="btn btn-outline-dark flex-shrink-0" type="button">
+                            <button className="btn btn-outline-dark flex-shrink-0" type="button" onClick={() => {
+                                toast.success("Added to cart successfully!")
+                                increaseQty(data.id);
+                            }}>
                                 <i className="bi-cart-fill me-1"></i>
                                 Add to cart
                             </button>
@@ -71,6 +76,20 @@ const FoodDetail = () => {
                 </div>
             </div>
         </section>
+        
+        {/* ToastContainer for this page only */}
+        <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            
+            draggable
+            pauseOnHover
+            theme="dark"
+        />
     </div>
   )
 }

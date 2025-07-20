@@ -3,9 +3,11 @@ import './Menubar.css'
 import {assets} from '../../assets/assets.js'
 import { Link } from 'react-router-dom'
 import {useAppcontext} from '../../context/AppContext.jsx'
+import {useNavigate} from 'react-router-dom'
 
 const Menubar = () => {
   const [active, setActive] = React.useState("Home");
+  const navigate = useNavigate();
   const {quantities} = useAppcontext();
  const cart =  Object.values(quantities).filter(qty => qty > 0).length; // Count items with quantity > 0
   return (
@@ -36,10 +38,10 @@ const Menubar = () => {
                 <span className="position-relative top-0 start-100 translate-middle badge rounded-pill bg-danger">{cart}</span>
             </div></Link>
             <div>
-                <button className="btn btn-outline-primary">Login</button>
+                <button className="btn btn-outline-primary" onClick={() => navigate("/login")}>Login</button>
             </div>
             <div>
-                <button className="btn btn-outline-success">Sign Up</button>
+                <button className="btn btn-outline-success" onClick={() => navigate("/register")}>Sign Up</button>
             </div>
         </div>
     </div>

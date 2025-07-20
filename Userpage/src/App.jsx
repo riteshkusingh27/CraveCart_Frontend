@@ -7,6 +7,8 @@ import Contactus from './pages/Contactus.jsx'
 import FoodDetail from './pages/FoodDetail.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
+import Login from './Components/Login/Login.jsx'
+import Register from './Components/Register/Register.jsx'
 const App = () => {
   return (
     <div>
@@ -20,6 +22,9 @@ const App = () => {
     <Route path="/food/:id" element={<FoodDetail />} />
     <Route path="/cart" element={<Cart />} />
     <Route path="/checkout" element={<Checkout />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+
    </Routes>
 
     </div>
