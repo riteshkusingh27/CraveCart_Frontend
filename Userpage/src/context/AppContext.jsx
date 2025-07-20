@@ -5,6 +5,16 @@ const AppContext = createContext();
 
 export const AppProvider = ({children})=>{
     const [foodList , setFoodList] = useState([]);
+    const [quantities,setQuantities] = useState({});
+    const  increaseQty = (foodid)=>{
+        setQuantities((prev) =>({...prev , [foodid]: (prev[foodid] || 0) + 1}));
+
+    }
+
+    const decreaseQty = (foodid)=>{
+        setQuantities((prev) =>({...prev, [foodid] : prev[foodid] > 0 ? prev[foodid] - 1 : 0}));
+
+    }
     const fetchFoodList = async()=>{
         const response = await axios.get('http://localhost:8080/api/foods');
         setFoodList(response.data);
@@ -14,7 +24,10 @@ export const AppProvider = ({children})=>{
     const value = {
         foodList,
         setFoodList,
-        axios
+        axios,
+        increaseQty,
+        decreaseQty,
+        quantities
         
     }
     useEffect(()=>{

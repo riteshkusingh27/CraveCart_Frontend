@@ -37,7 +37,7 @@ export const categories =[
         image : salad
     },
     {
-        category : 'Cakes',
+        category : 'cake',
         image : cake
     },
     {
