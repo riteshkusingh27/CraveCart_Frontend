@@ -5,6 +5,7 @@ Explore section
 cart 
 <img width="1202" height="642" alt="image" src="https://github.com/user-attachments/assets/9f945ace-41c1-4f16-a984-1b9b6e0fdfaf" />
 Checkout page 
-![Uploading image.png…]()
+<img width="1216" height="682" alt="image" src="https://github.com/user-attachments/assets/23bc2263-c7f4-48e6-a4d5-f56909cb2b63" />
+
 
 
