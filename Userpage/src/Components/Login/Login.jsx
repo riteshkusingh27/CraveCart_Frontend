@@ -44,7 +44,7 @@ const Login = () => {
                 
                 <hr className="my-4"/>
                 <div className="mt-">
-                    Already have an account? <a href="/register">Sign Up</a>
+                    Don't have an account? <a href="/register">Sign Up</a>
                 </div>
               
               </form>
