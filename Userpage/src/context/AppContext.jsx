@@ -6,6 +6,10 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [foodList, setFoodList] = useState([]);
   const [quantities, setQuantities] = useState({});
+      // token context
+  const [token, setToken] = useState("");
+  const [logged,setLogged] = useState(false);
+
   const increaseQty = (foodid) => {
     setQuantities((prev) => ({ ...prev, [foodid]: (prev[foodid] || 0) + 1 }));
   };
@@ -29,12 +33,20 @@ export const AppProvider = ({ children }) => {
     increaseQty,
     decreaseQty,
     quantities,
+    token,
+    setToken,
+    logged,
+    setLogged
   };
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
-    }
+      if(localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
+      }
+    } 
     loadData();
+
   }, []);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

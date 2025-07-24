@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-dom'
 const Menubar = () => {
   const [active, setActive] = React.useState("Home");
   const navigate = useNavigate();
-  const {quantities} = useAppcontext();
+  const {quantities , token , setToken} = useAppcontext();
  const cart =  Object.values(quantities).filter(qty => qty > 0).length; // Count items with quantity > 0
   return (
     <div>
@@ -37,12 +37,27 @@ const Menubar = () => {
                 <img src={assets.carticon} alt="" height={30} width={30} className="position-absolute" />
                 <span className="position-relative top-0 start-100 translate-middle badge rounded-pill bg-danger">{cart}</span>
             </div></Link>
-            <div>
+            {
+              !token ? <>
+              <div>
                 <button className="btn btn-outline-primary" onClick={() => navigate("/login")}>Login</button>
             </div>
             <div>
                 <button className="btn btn-outline-success" onClick={() => navigate("/register")}>Sign Up</button>
             </div>
+              </>   : <div className="dropdown text-end ">
+                <a href="" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                <ul className="dropdown-menu text-small">
+                  <li><a className="dropdown-item" href="#">Orders</a></li>
+
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><a className="dropdown-item" href="/" onClick={() => {
+                    setToken("");
+                    localStorage.removeItem("token");
+                  }}>Logout</a></li>
+                </ul>
+              </div>
+            }
         </div>
     </div>
   </div>

@@ -1,7 +1,40 @@
 import React from 'react'
-
+import { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
 const Register = () => {
+  const navigate = useNavigate();
   window.title = "Register - Food Delivery";
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const OnChangeHandler = (e)=>{
+    const name = e.target.name ;
+    const value = e.target.value;
+    //  using the spread operator 
+    setData({...data, [name]: value});
+  }
+  const onSubmitHandler = async (e)=>{
+             e.preventDefault();
+        try {
+       const response =      await axios.post('http://localhost:8080/api/register', data )
+            if(response.status === 201){
+              setData({name: '', email: '', password: ''});
+   
+              toast.success("Registration Completed , Please Log in" ,{
+                draggable : true
+              })
+              navigate("/login");
+            }
+        } catch (error) {
+          toast.error("Unable to Register ")
+        }
+
+  }
   return (
      <div className="container">
       <div className="row">
@@ -9,15 +42,19 @@ const Register = () => {
           <div className="card border-0 shadow rounded-3 my-5">
             <div className="card-body p-4 p-sm-5">
               <h5 className="card-title text-center mb-5 fw-light fs-5 fw-bold">Register</h5>
-              <form>
+              <form onSubmit={onSubmitHandler} onReset={()=>setData({name: '', email: '', password: ''})}>
                 <div className="form-floating mb-3">
                   <input 
-                    type="email" 
+                    type="text" 
                     className="form-control" 
-                    id="floatingInput" 
+                    id="name" 
                     placeholder="name@example.com"
+                    name="name"
+                    onChange={OnChangeHandler}
+                    value={data.name}
+                    required
                   />
-                  <label htmlFor="floatingInput">Name</label>
+                  <label htmlFor="name">Name</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input 
@@ -25,6 +62,10 @@ const Register = () => {
                     className="form-control" 
                     id="floatingInput" 
                     placeholder="name@example.com"
+                    name="email"
+                    onChange={OnChangeHandler}
+                    value={data.email}
+                    required
                   />
                   <label htmlFor="floatingInput">Email address</label>
                 </div>
@@ -34,6 +75,10 @@ const Register = () => {
                     className="form-control" 
                     id="floatingPassword" 
                     placeholder="Password"
+                    name="password"
+                    onChange={OnChangeHandler}
+                    value={data.password}
+                    required
                   />
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
