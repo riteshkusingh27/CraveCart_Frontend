@@ -3,8 +3,11 @@ import {useState} from "react";
 import axios from "axios";
 import { toast } from "react-toastify"; 
 import  {useAppcontext} from "../../context/AppContext.jsx";
+import {useNavigate} from "react-router-dom";
 const Login = () => {
-  const {setToken} = useAppcontext();
+  const navigate = useNavigate();
+  
+  const {setToken , user , setUser} = useAppcontext();
   const[data, setData] = useState({
     email: '',
     password: ''
@@ -15,12 +18,16 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/api/login', data);
       if (response.status === 200) {
         setToken(response.data.token);
+        setUser(response.data.nameUser);
+        console.log(response)
+        console.log("User logged in: " + response.data.name);
         console.log("Token" + response.data.token)
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("username", response.data.nameUser);
         setData({ email: '', password: '' });
         toast.success("Login Successful", { draggable: true });
          // reload and go to home page 
-        window.location.href = "/";
+          navigate("/");
       }
     } catch (error) {
       toast.error("Login failed, please check your credentials");

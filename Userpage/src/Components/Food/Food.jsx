@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Food = ({ category, searchText }) => {
   const { foodList, increaseQty, decreaseQty, quantities } = useAppcontext();
   // Filter food items based on the selected category
-
+       
   const filteredFoodList = foodList.filter(
     (food) =>
       (category === "All" || food.category === category) &&
@@ -72,6 +72,7 @@ const Food = ({ category, searchText }) => {
                       <button
                         className="btn btn-outline-primary btn-sm me-2"
                         onClick={() => decreaseQty(food.id)}
+                        
                       >
                         <i className="bi bi-dash-circle"></i>
                       </button>

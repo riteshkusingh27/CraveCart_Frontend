@@ -7,7 +7,6 @@ const Cart = () => {
 
   // Cart items with safe checking
   const cartItems = foodList.filter((food) => (quantities[food.id] || 0) > 0);
-
   // Calculations with safe checking
   const subtotal = cartItems.reduce(
     (acc, food) => acc + food.price * (quantities[food.id] || 0),

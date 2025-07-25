@@ -9,12 +9,14 @@ import icecream from './icecream.jpg'
 import salad from './salad.webp'
 import cake from './cake.webp'
 import pizza from './pizza.webp'
+import avatar from './avatar.avif'
 
 
 export const assets = {
     logo,
     cravecart,
-    carticon
+    carticon,
+    avatar
 
 }
 
