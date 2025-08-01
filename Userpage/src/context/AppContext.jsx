@@ -7,10 +7,9 @@ export const AppProvider = ({ children }) => {
   const [foodList, setFoodList] = useState([]);
   const [quantities, setQuantities] = useState({});
 
-  console.log(quantities);
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
-  console.log("User: " + user);
+
 
 
   const increaseQty = async (foodid) => {
@@ -40,7 +39,7 @@ export const AppProvider = ({ children }) => {
   const fetchFoodList = async () => {
     const response = await axios.get("http://localhost:8080/api/foods");
     setFoodList(response.data);
-    console.log(response.data);
+    
   };
 
   const LoadCartData = async (token) => {
