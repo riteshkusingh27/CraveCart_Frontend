@@ -13,18 +13,22 @@ export const AppProvider = ({ children }) => {
 
 
   const increaseQty = async (foodid) => {
+  
+    
     setQuantities((prev) => ({ ...prev, [foodid]: (prev[foodid] || 0) + 1 }));
 
     await axios.post(
       "http://localhost:8080/api/cart",
-      { foodid },
+      // should be passed without curly braces 
+       foodid 
+       ,
       {
-        headers: { Authorization: `Bearer ${token}` },
-        "Content-Type": "application/json",
+        headers: { Authorization: `Bearer ${token}` ,
+          "Content-Type": "application/json"}
       }
     );
   };
-   
+   console.log(quantities);
   const decreaseQty = (foodid) => {
     setQuantities((prev) => ({
       ...prev,

@@ -67,7 +67,7 @@ const Food = ({ category, searchText }) => {
                     View
                   </Link>
                   
-                  {quantities[food.id] > 0 ? (
+                  {(quantities[food.id] || 0) > 0 ? (
                     <div className="d-flex align-items-center">
                       <button
                         className="btn btn-outline-primary btn-sm me-2"

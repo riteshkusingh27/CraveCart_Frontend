@@ -23,7 +23,7 @@ const Login = () => {
         console.log("User logged in: " + response.data.name);
         console.log("Token" + response.data.token)
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", response.data.nameUser);
+        localStorage.setItem("username", response.data.userName);
         setData({ email: '', password: '' });
         toast.success("Login Successful", { draggable: true });
          // reload and go to home page 

@@ -4,9 +4,10 @@ import { assets } from "../assets/assets.js";
 import { useAppcontext } from "../context/AppContext.jsx";
 import {useEffect} from "react";
 import {toast} from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { foodList, increaseQty, decreaseQty, quantities ,axios , token} = useAppcontext();
+  const { foodList, increaseQty, decreaseQty, quantities ,axios , token, setQuantities} = useAppcontext();
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -16,62 +17,92 @@ const Checkout = () => {
     state: "",
     zip: "",
   });
+  const navigate = useNavigate();
   
   const onChangeHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setData({ ...data, [name]: value });
   };
+    
+  const deleteOrder = async (orderid) => {
+           try {
+           await   axios.delete(`http://localhost:8080/api/orders`+orderid, {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              })
+           } catch (error) {
+            toast.error("Something went wrong ");
+            
+           }
+     }
+  const clearCart = async () => {
+           try {
+           await   axios.delete("http://localhost:8080/api/cart", {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              })
+              setQuantities({});
+           } catch (error) {
+            toast.error("Something went wrong while clearing the cart");
+            
+           }
+     }
 
   const initiateRazorpayPayment = (orderData)=>{
     const options = {
        key : import.meta.env.VITE_RAZORPAY_KEY,
-       amount : orderData.amount * 100,
+       amount : orderData.amount  ,
         currency : "INR",
         name : "Crave Cart",
         description : "Food Order Payment",
         order_id : orderData.razorpayId,
         // handeler function 
         handler : async function (response) {
-         
-            await   verifyPayment(response);
+             
+             console.log(response)
+            await verifyPayment(response);
           
         },
         modal : {
             ondismiss : async function (){
               await deleteOrder(orderData.id);
-
             }
         }
-
-
-
     };
     const razorpay = new window.Razorpay(options);
     razorpay.open()
 
   }
   const verifyPayment = async (response) => {
-    const paymentData ={
-      razorpayPaymentId : response.razorpay_payment_id,
-      razorpayOrderId : response.razorpay_order_id,
-      razorpaySignature : response.razorpay_signature,
-    }
+ 
+            const data = response ; 
       try {
-        const res = await axios.post("http://localhost:8080/api/orders/verify", paymentData);
-        if (res.status === 200) {
-          toast.success("Payment Successful");
+        const res = await axios.post("http://localhost:8080/api/orders/verify", data , {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.status === 200 ) {
+          toast.success("Payment Successfull");
+          // clear the cart
+          await clearCart();
+          // redirect to myorders page
+          navigate('/myorders');
+        }
+        else{
+          toast.error("Payment elsdjf Failed");
+          navigate('/checkout');
         }
       } catch (error) {
-        
+        toast.error("Payment Verification Failed");
       }
   }
   const onSubmitHandler = async  (e) => {
-    e.preventDefault();
+       e.preventDefault();
     const orderData = {
       userAddress : `${data.firstName} ${data.lastName}, ${data.address}, ${data.address2}, ${data.state}, ${data.zip}`,
       phoneNumber :   data.phone,
-      email : data.email,
       orderItems : cartItems.map(item => ({
         foodId : item.id , 
         quantity : quantities[item.id],
@@ -135,6 +166,7 @@ const Checkout = () => {
   const shipping = subtotal === 0 ? 0 : 10;
   const tax = subtotal * 0.05; // Assuming a 5% tax rate
   const total = subtotal + shipping + tax;
+
 
   return (
     <div className="container mt-1">
@@ -210,15 +242,7 @@ const Checkout = () => {
                 </button>
               </div>
             </div>
-            <div className="mt-4">
-              <button
-                className="btn btn-primary btn-md btn-block d-flex align-items-center"
-                type="submit"
-                disabled={cartItems.length === 0}
-              >
-                Continue to checkout
-              </button>
-            </div>
+          
           </form>
         </div>
 
@@ -273,7 +297,7 @@ const Checkout = () => {
                 type="tel"
                 className="form-control"
                 id="email"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            
                 placeholder="+91"
                 required
                 name="phone"
@@ -342,6 +366,15 @@ const Checkout = () => {
               </div>
             </div>
             <hr className="mb-2" />
+              <div className="mt-4">
+              <button
+                className="btn btn-primary btn-md btn-block d-flex align-items-center"
+                type="submit"
+                disabled={cartItems.length === 0}
+              >
+                Continue to checkout
+              </button>
+            </div>
           </form>
         </div>
       </div>
