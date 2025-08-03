@@ -11,3 +11,7 @@
 .active{
     color : tomato !important;
 }
+.order {
+    color: #000;
+    font-weight: 500;
+}

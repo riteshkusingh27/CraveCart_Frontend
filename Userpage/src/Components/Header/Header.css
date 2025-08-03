@@ -9,11 +9,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../../assets/bg2.png');
+  background-image: url('../../assets/header.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.3; /* Only background will have opacity */
+  opacity: 0.9; /* Only background will have opacity */
   border-radius: inherit;
   z-index: -1;
 }

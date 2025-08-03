@@ -1,35 +1,31 @@
 import React from 'react'
-import axios from 'axios'
+import { useAppcontext } from '../context/AppContext'
 import { useEffect } from 'react'
 
-const Orders = () => {
-  
+const Myorders = () => {
+  const { token, axios } = useAppcontext();
   const [data, setData] = React.useState([]);
-
-  const updateStatus   =  async (e, orderId)=>{
-         const response = await  axios.patch(`http://localhost:8080/api/orders/status/${orderId}?status=${e.target.value}`)
-         if(response.status ===200){
-          fetchOrders();
-         }
-  }
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/orders/all");
+      const response = await axios.get("http://localhost:8080/api/orders", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setData(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
   };
 
-  useEffect(()=>{
-    fetchOrders();
-  }, [])
-
+  useEffect(() => {
+    if (token) {
+      fetchOrders();
+    }
+  }, [token]);
 
   return (
     <div className="container">
-        <h2 className="text-center mt-3">Orders</h2>
+        <h2 className="text-center mt-3">Recent Orders</h2>
       <div className="py-5 row justify-content-center">
         <div className="col-11 card">
           <table className="table table-responsive table-striped table-hover">
@@ -59,9 +55,6 @@ const Orders = () => {
                       .map(item => `${item.name} x${item.quantity}`)
                       .join(", ")
                     }
-                    <div>
-                        <p>{order.userAddress}</p>
-                    </div>
                   </td>
                   <td>₹{order.amount}</td>
                   <td>
@@ -69,16 +62,14 @@ const Orders = () => {
                       {order.orderStatus}
                     </span>
                     
-                     
+                         <button className=" ms-2 btn btn-sm btn-warning" onClick={fetchOrders}>
+                        <i className="bi bi-arrow-clockwise"></i>
+                    </button>
+                   
                   </td>
                   <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                   <td>
-                     <select name="" id="" onChange={(e)=>updateStatus(e, order.id)} value={order.orderStatus} className="form-select form-select-sm">
-                      <option value="Food Preparing">Preparing</option>
-                      <option value="Food Prepared">Prepared</option>
-                      <option value="Out for Delivery">Out for Delivery</option>
-                      <option value="Delivered">Delivered</option>
-                     </select>
+                   
                   </td>
                 </tr>
               ))}
@@ -90,4 +81,4 @@ const Orders = () => {
   );
 };
 
-export default Orders
+export default Myorders

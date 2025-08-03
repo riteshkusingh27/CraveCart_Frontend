@@ -129,9 +129,7 @@ const Menubar = () => {
                   </a>
                   <ul className="dropdown-menu text-small">
                     <li>
-                      <a className="dropdown-item" href="#">
-                        Orders
-                      </a>
+                      <Link to="/myorders" className="text-decoration-none  order dropdown-item ">Orders</Link>
                     </li>
 
                     <li>

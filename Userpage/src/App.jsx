@@ -10,7 +10,11 @@ import Checkout from './pages/Checkout.jsx'
 import Login from './Components/Login/Login.jsx'
 import Register from './Components/Register/Register.jsx'
 import {ToastContainer} from 'react-toastify'
+import Myorders from './pages/Myorders.jsx'
+import {useAppcontext} from './context/AppContext.jsx'
+import { Navigate } from 'react-router-dom'
 const App = () => {
+  const {token} = useAppcontext();
   return (
     <div>
 
@@ -23,9 +27,10 @@ const App = () => {
     <Route path="/contactus" element={<Contactus />} />
     <Route path="/food/:id" element={<FoodDetail />} />
     <Route path="/cart" element={<Cart />} />
-    <Route path="/checkout" element={<Checkout />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
+    <Route path="/checkout" element={token ? <Checkout /> : <Navigate to="/login" />} />
+    <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
+    <Route path="/register" element={token ? <Navigate to="/" /> : <Register />} />
+    <Route path="/myorders" element={token ? <Myorders /> : <Navigate to="/login" />} />
 
    </Routes>
 
